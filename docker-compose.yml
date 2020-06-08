@@ -3,18 +3,18 @@ services:
   adminview:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: abdul@domain.com
-      PGADMIN_DEFAULT_PASSWORD: 123456
+      PGADMIN_DEFAULT_EMAIL: ${DEF_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DEF_PASSWORD}
     ports:
       - '80:80'
   dockerpg:
     image: postgres
     environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_USER: abdul
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: todo-db
     ports:
-      - '5432:5432'
+      - '${DOCKER_DB_PORT}:5432'
     volumes:
       - myvol:/var/lib/postgresql/data
   server:
