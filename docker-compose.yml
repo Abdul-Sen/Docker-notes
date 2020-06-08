@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  adminview:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: abdul@domain.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    ports:
+      - '80:80'
+  dockerpg:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: abdul
+      POSTGRES_DB: todo-db
+    ports:
+      - '5432:5432'
+    volumes:
+      - myvol:/var/lib/postgresql/data
+  server:
+    image: node-server
+    depends_on:
+      - dockerpg
+    ports:
+      - '3000:3000'
+volumes:
+  myvol:
