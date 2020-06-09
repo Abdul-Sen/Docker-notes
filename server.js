@@ -7,25 +7,33 @@ app.use(bodyParser.json());
 
 
 app.get('/', function (req, res) {
-  res.send('Hello World, this is ABDUL from docker');
+  res.send('Todo home screen, to be built in react');
 });
 
 
-app.post('/todo',(req,res)=>{
+app.post('/todo',async (req,res)=>{
   // create a todo
-  console.log(req.body);
+  let result = await todoService.creatTodo(req.body.title, req.body.description);
+  res.json(result);
 })
 
 app.get('/todos',async (req,res)=>{
   // get all todos
+  const notes = await todoService.getTodos();
+  res.json(notes);
 })
 
-app.post('/todo',(req,res)=>{
-  //update a post
+app.put('/todo/:id',async (req,res)=>{
+  //update a todo
+  let todo = {id: req.params.id, title:req.body.title, description: req.body.description};
+  let result = await todoService.updateTodo(todo);
+  res.json(result);
 });
 
-app.delete('/todo',(req,res)=>{
+app.delete('/todo/:id',async (req,res)=>{
   //delete a post
+  let result = await todoService.deleteTodo(req.params.id);
+  res.json(result);
 });
 
 

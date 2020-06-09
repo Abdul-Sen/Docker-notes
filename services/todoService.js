@@ -43,10 +43,28 @@ const Todo = sequelize.define('Todo', {
 //Crud
 module.exports.creatTodo = async (inputTitle, inputDescription)=>{ // {title:"",description:""}
  let result = await Todo.create({title: inputTitle, description: inputDescription});
- console.log(result);
+ return result;
 }
 
 // cRud
-module.exports.getTodos = ()=>{
+module.exports.getTodos = async ()=>{
   // Todo.findAll({})
+ const notes = await Todo.findAll();
+ return notes;
+}
+
+module.exports.updateTodo = async (todo)=>{
+  // Update todo
+ let result = await Todo.update({...todo},{where:{id: todo.id}});
+  return result;
+}
+
+module.exports.deleteTodo = async (itemId)=>{
+ let result = await Todo.destroy({
+    where: {
+      id: itemId
+    }
+  });
+  
+  return result;
 }
